@@ -1,4 +1,6 @@
-# multilanguage-tool
+# Multilanguage-tool
 
-comming soon
+a little tool to make your Website/Webapp/Homepage Multilingual.
+
+More comming soon
 
