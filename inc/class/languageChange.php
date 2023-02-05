@@ -1,11 +1,18 @@
 <?php
 
 class languageChange
-{
-    public $languageFileArray;  //  Contains all lines from the language file
-    public $language;   //  Contains the language code (en, de, cz....)
-    public $indexPath;  //  Contains the folder path of the index.php
-    public $langFilePath;   //  Contains the path to the language file /inc/lang/lang.[en].php
+{   
+    //  Contains all lines from the language file
+    public $languageFileArray;  
+
+    //  Contains the language code (en, de, cz....)
+    public $language;
+
+    //  Contains the folder path of the index.php
+    public $indexPath;
+
+    //  Contains the path to the language file /inc/lang/lang.[en].php
+    public $langFilePath;
 
     //  Call the constuctor and set the language code
     public function __construct($language = 'en')
@@ -64,8 +71,6 @@ class languageChange
         $a = htmlspecialchars($a, ENT_QUOTES, 'UTF-8', true);
 
         $replaceArray = array(
-            '<' => '&lt;',
-            '>' => '&gt;',
             'ä' => '&auml;',
             'ö' => '&ouml;',
             'ü' => '&uuml;',
@@ -87,6 +92,7 @@ class languageChange
         return $a;
     }
 
+    
     //  Creates an change link for the demo
     public function returnForDemo() {
         $link = '<a href="?lang=de">Change to German</a>';
