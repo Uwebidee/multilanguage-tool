@@ -1,32 +1,38 @@
 <?php
 /*
- *  Language Changer v1.0.0
+ *  Language Changer v1.0.1
  * 
  */
 
-//  Change this Variable en = default, de = german. If empty = default
-$setLanguageTo = @$_GET['lang'];
-
-//  Placeholder for sprintf
-$sprintfPlaceholder1 = 'echo $translator->getSelectedTranslation(\'HERE YOUR TEXT\');';
-$sprintfPlaceholder2 = 'echo sprintf($translator->getSelectedTranslation(\'This is %s and %s \'), $variable1, $variable2);';
-
-//  Variable for sprintf()
-$sprintfVariable = 'DEMO';
-
+//  OPTIONS [Start]
 //  Complete systempath. str_replace is for Windows...
 $indexPath = str_replace('\\', '/', __DIR__);
 
 //  Path to the language file
 $langFilePath = '/inc/lang/';
 
+//  Set the seach Keyword and replaceword.
+//  If you change the words her, you must be change the words in the language file.
+$keyWord = 'lid';
+$replaceWord = 'lstr';
+//  OPTIONS [End]
+
+//  Change this Variable $setLanguageTo = 'en' (default, english), $setLanguageTo = 'de' (german). If empty = default
+//  You can call your own language file over the url https://your-domain.tld/index.php?lang=YOUR-FILENAME (lang.YOUR-FILENAME.php)
+//  Please do not use @$_GET['lang'] in your project without a validate.
+$setLanguageTo = htmlspecialchars(@$_GET['lang']);
+
+//  Placeholder for sprintf()
+$sprintfPlaceholder1 = 'echo $translator->getSelectedTranslation(\'HERE YOUR TEXT\');';
+$sprintfPlaceholder2 = 'echo sprintf($translator->getSelectedTranslation(\'This is %s and %s \'), $variable1, $variable2);';
+
 //  Include the language change class
 require_once $indexPath . '/inc/class/languageChange.php';
 
-//  Call the Class, for default leav empty
+//  Call the Class, for default leave empty
 $translator = new languageChange($setLanguageTo);
-//  Give the Indexpath and the Language filepath $indexPath, '/inc/lang'
-$translator->getPaths($indexPath, $langFilePath);
+//  Set the options $indexPath, '/inc/lang/', $keyWord = 'lid', $replaceWord = 'lstr'
+$translator->setOptions($indexPath, $langFilePath, $keyWord, $replaceWord);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $translator->getSelectedTranslation('en'); ?>">
