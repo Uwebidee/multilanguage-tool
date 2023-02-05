@@ -1,61 +1,50 @@
 <?php
-$setLanguageTo = 'de';
+/*
+ *  Language Changer v1.0.0
+ * 
+ */
 
-$dirpath = str_replace('\\', '/', __DIR__);
+//  Change this Variable en = default, de = german. If empty = default
+$setLanguageTo = @$_GET['lang'];
 
-require_once $dirpath . '/src/inc/func/func.inc.php';
-require_once $dirpath . '/src/inc/class/autoloader.php';
+//  Placeholder for sprintf
+$sprintfPlaceholder1 = 'echo $translator->getSelectedTranslation(\'HERE YOUR TEXT\');';
+$sprintfPlaceholder2 = 'echo sprintf($translator->getSelectedTranslation(\'This is %s and %s \'), $variable1, $variable2);';
 
-//require_once $dirpath . '/src/inc/lang/lang.de.php';
-$translate = new Controller_LanguageController($setLanguageTo, $dirpath);
+//  Variable for sprintf()
+$sprintfVariable = 'DEMO';
 
-require_once $dirpath . '/src/inc/values.inc.php';
+//  Complete systempath. str_replace is for Windows...
+$indexPath = str_replace('\\', '/', __DIR__);
+
+//  Path to the language file
+$langFilePath = '/inc/lang/';
+
+//  Include the language change class
+require_once $indexPath . '/inc/class/languageChange.php';
+
+//  Call the Class, for default leav empty
+$translator = new languageChange($setLanguageTo);
+//  Give the Indexpath and the Language filepath $indexPath, '/inc/lang'
+$translator->getPaths($indexPath, $langFilePath);
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $translate->getSelectedTranslation('en'); ?>">
-
+<html lang="<?php echo $translator->getSelectedTranslation('en'); ?>">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="./src/css/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="./src/css/bootstrap.min.css">
-  <script src="./src/js/jquery.min.js"></script>
-  <script src="./src/js/bootstrap.bundle.min.js"></script>
-  <script src="./src/js/jquery.validate.min.js"></script>
-  <script src="./src/js/additional-methods.min.js"></script>
-  <!-- <script src="./src/js/vali.js"></script> -->
-  <title><?php echo sprintf($translate->getSelectedTranslation('%s %s - &copy; 2023 - %s by %s'), definedVars('PROGRAMTITLE'), definedVars('PROGRAMVERSION'), definedVars('ACTUALLYYEAR'), definedVars('PUBLISHER')); ?></title>
+  <link rel="stylesheet" type="text/css" href="./src/css/min.style.css">
+  <title><?php echo $translator->getSelectedTranslation('Your Website Title'); ?></title>
 </head>
-
-<body class="text-bg-dark p-0 m-0">
-
-  <div class="container">
-    <h1 class="title"><?php echo sprintf($translate->getSelectedTranslation('Welcome to %s'), definedVars('PROGRAMTITLE')); ?></h1>
-
-
-
-    <div class="row">
-      <div class="col-sm-8">
-        <?php
-        require_once $dirpath . '/src/view/index.view.php';
-        ?>
-      </div>
-
-      <div class="col-sm-3 offset-sm-1">
-        <h3><?php echo $translate->getSelectedTranslation('Logs'); ?></h3>
-        <p>
-        <?php echo $translate->getSelectedTranslation('Previous logs with cURL queries and returns.'); ?>
-        </p>
-        <ul>
-          <?php
-          readLogFileDir($dirpath . '/src/logs')
-          ?>
-        </ul>
-      </div>
+<body>
+  <div class="container center">
+    <h1 class="title"><?php echo $translator->getSelectedTranslation('Welcome to the Code-Demo'); ?></h1>
+    <?php echo $translator->returnForDemo(); ?>
+    <div class="content">
+      <?php echo sprintf($translator->getSelectedTranslation('Here is a Demonstration about the function of this code with a placeholder and a Linebreak.\n The code you need is\n\n <b>%s</b> \n\n or with sprintf and placeholder\n\n <b>%s</b>'), $sprintfPlaceholder1, $sprintfPlaceholder2); ?>
     </div>
-
   </div>
 </body>
-
 </html>
