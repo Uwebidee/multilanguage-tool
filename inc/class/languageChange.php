@@ -57,16 +57,16 @@ class languageChange
             $fileHandle = fopen($langFile, 'r');
             while (!feof($fileHandle)) {
 
-                $content = fgets($fileHandle);
+                $content = trim(fgets($fileHandle));
 
-                if (substr($content, 0, strlen($this->keyWord)) ==  $this->keyWord) {
-                    $count = strlen(substr($content, strlen($this->keyWord) + 2));
-                    $this->keyArray[] = substr($content, strlen($this->keyWord) + 2, ($count-3));
+                if (trim(substr($content, 0, strlen($this->keyWord))) ==  $this->keyWord) {
+                    $contWhitespaceQuote = strlen($this->keyWord) + 2;
+                    $this->keyArray[] = substr($content, $contWhitespaceQuote, -1);
                 }
 
-                if (substr($content, 0, strlen($this->replaceWord)) ==  $this->replaceWord) {
-                    $count = strlen(substr($content, strlen($this->replaceWord) + 2));
-                    $this->replaceArray[] = substr($content, strlen($this->replaceWord) + 2, ($count-3));
+                if (trim(substr($content, 0, strlen($this->replaceWord))) ==  $this->replaceWord) {                    
+                    $contWhitespaceQuote = strlen($this->replaceWord) + 2;
+                    $this->replaceArray[] = substr($content, $contWhitespaceQuote, -1);
                 }
             }
             fclose($fileHandle);
